@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sale Page</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="~{headers :: header}"></div>
+
+<div class="row">
+    <div th:replace="~{categories::category}"></div>
+    <div th:replace="~{products::product}"></div>
+
+            <!--ACTION-->
+    <div class="col-6">
+        <div class="row bg-dark border-top border-right">
+            <div class="col-12">
+                <h4 class="text-center text-white">Basket</h4>
+            </div>
+        </div>
+        <div  class="row" th:if="${basketProducts.size()!=0}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Product name</th>
+                    <th>Product price</th>
+                    <th>Product amount</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody th:each="basketProduct:${basketProducts}">
+                <tr>
+                    <td th:text="${basketProduct.product.name}"></td>
+                    <td th:text="${basketProduct.product.selling}"></td>
+                    <td th:text="${basketProduct.amount}"></td>
+                    <td>
+                        <form action="/sale/delete" method="post">
+                            <input name="basketId" type="hidden" th:value="${basketProduct.product.getId()}">
+                            <button class="btn btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="container mt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 th:text="'All summ: '+${sum}"></h3>
+                    <form action="/sale/makeOrder" method="post">
+                        <button class="btn btn-success">End sales</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container mt-5">
+                <div class="row border-top border-bottom" th:if="${currentProduct!=null}">
+                    <div class="col-md-6">
+                        <img th:src="${'/file/' + currentProduct.product.id}" class="img-fluid" alt="Product Image">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 th:text="${currentProduct.product.name}"></h2>
+                        <h4 th:text="${currentProduct.product.selling}"></h4>
+                        <div class="d-flex flex-row align-items-center">
+                            <form class="col-auto" action="/sale/count?action=minus" method="post" th:if="${currentProduct.amount!=1}">
+                                <input name="productId" type="hidden" th:value="${productId}">
+                                <input name="categoryId" type="hidden" th:value="${categoryId}">
+                                <input name="amount" type="hidden"  th:value="${currentProduct.amount}">
+                                <input name="currentProductId" type="hidden" th:value="${productId}">
+                                <button class="btn btn-dark px-3">-</button>
+                            </form>
+                            <button class="btn btn-secondary col-auto" th:if="${currentProduct.amount==1}">-</button>
+                            <div class="col-auto mx-2" th:text="${currentProduct.amount}"></div>
+                            <form class="col-auto" action="/sale/count?action=plus" method="post" th:if="${currentProduct.amount<allAmount}">
+                                <input name="productId" type="hidden" th:value="${productId}">
+                                <input name="categoryId" type="hidden" th:value="${categoryId}">
+                                <input name="amount" type="hidden"  th:value="${currentProduct.amount}">
+                                <input name="currentProductId" type="hidden" th:value="${productId}">
+                                <button class="btn btn-dark px-3">+</button>
+                            </form>
+                            <button class="btn btn-secondary col-auto" th:if="${currentProduct.amount==allAmount || allAmount==0}">+</button>
+                            <form action="/sale/addBasket" method="post" th:if="${allAmount>0}">
+                                <input name="amount" type="hidden"  th:value="${currentProduct.amount}">
+                                <input name="currentProductId" type="hidden" th:value="${productId}">
+                                <button class="btn btn btn-primary btn-block">Add to basket</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

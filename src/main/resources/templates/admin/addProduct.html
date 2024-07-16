@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="row py-3">
+    <div class="col-4 offset-4">
+        <div class="card p-2">
+            <form action="/admin/product" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="exampleInputEmail3">Category</label>
+                    <select class="form-control" name="categoryId" id="exampleInputEmail3">
+                        <th:block th:each="category:${categories}">
+                            <option th:value="${category.id}" th:text="${category.name}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Product name</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1" >
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail4">Selling price of product</label>
+                    <input name="sell" type="number" class="form-control" id="exampleInputEmail4">
+                </div>
+                <input name="photo" type="file">
+                <hr>
+                <button class="btn btn-success btn-block">Save</button>
+            </form>
+        </div>
+        <a href="/admin" class="btn btn-danger btn-block">Back</a>
+    </div>
+</div>
+
+</body>
+</html>

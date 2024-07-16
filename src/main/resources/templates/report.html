@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Page</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="~{headers :: header}"></div>
+<div class="row">
+    <div class="col-4 bg-dark border-top border-right" >
+        <a href="/report?action=sales"><h3 class="text-center text-white">Sales</h3></a>
+    </div>
+    <div class="col-4 bg-dark border-top border-right" >
+        <a href="/report?action=balance"><h3 class="text-center text-white">Balance</h3></a>
+    </div>
+    <div class="col-4 bg-dark border-top border-right" >
+        <a href="/report?action=profit"><h3 class="text-center text-white">Profit</h3></a>
+    </div>
+</div>
+<div class="row">
+<!--    SALE-->
+    <div class="col-12" th:if="${saleList!=null}">
+        <h3 class="text-center">SALES</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Product name</th>
+                <th>All sale amount</th>
+                <th>All summa</th>
+            </tr>
+            </thead>
+            <tbody th:each="sale:${saleList}">
+            <tr>
+                <td th:text="${sale.name()}"></td>
+                <td th:text="${sale.amount()}"></td>
+                <td th:text="${sale.summa()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--    BALANCE-->
+
+    <div class="col-12" th:if="${residualProducts!=null}">
+        <h3 class="text-center">BALANCE</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Residual amount</th>
+            </tr>
+            </thead>
+            <tbody th:each="residual:${residualProducts}">
+            <tr>
+                <td th:text="${residual.name()}"></td>
+                <td th:text="${residual.amount()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--    PROFIT-->
+
+    <div class="col-12" th:if="${profits!=null}">
+        <h3 class="text-center">PROFIT</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Profit</th>
+            </tr>
+            </thead>
+            <tbody th:each="profit:${profits}">
+            <tr>
+                <td th:text="${profit.name()}"></td>
+                <td th:text="${profit.profit()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

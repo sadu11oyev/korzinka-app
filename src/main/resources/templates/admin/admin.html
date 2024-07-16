@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="~{headers :: header}"></div>
+<div class="row">
+    <div th:replace="~{categories::category}"></div>
+    <div th:replace="~{products::product}"></div>
+    <div class="col-6 py-2" th:if="${currentProduct}">
+        <h4 class="text-center">Product settings</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <img  th:src="${'/file/' + currentProduct.id}" class="img-fluid" alt="Product Image">
+            </div>
+            <div class="col-md-6">
+                <div class="card p-2">
+                    <form action="/admin/editProduct" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1">Product name</label>
+                            <input name="name" th:value="${currentProduct.name}" type="text" class="form-control" id="exampleInputEmail1" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail4">Selling price of product</label>
+                            <input name="sell" th:value="${currentProduct.selling}" type="number" class="form-control" id="exampleInputEmail4">
+                        </div>
+                        <input name="photo" type="file">
+                        <hr>
+                        <input type="hidden" name="currentProductId" th:value="${currentProduct.id}">
+                        <button class="btn btn-success btn-block">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="row py-3">
+    <div class="col-4 offset-4">
+        <div class="card p-2">
+            <form action="/admin/category" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Category name</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter category name">
+                </div>
+                <button class="btn btn-success btn-block">Save</button>
+            </form>
+        </div>
+        <a href="/admin" class="btn btn-danger btn-block">Back</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>General page</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="~{headers :: header}"></div>
+
+<div class="row">
+    <div th:replace="~{categories::category}"></div>
+    <div th:replace="~{products::product}"></div>
+
+    <div class="col-6">
+        <div class="row bg-dark">
+            <div class="col-4 text-center ">
+                <a th:href="'/?categoryId=' + (${categoryId} ?: 'default-category-id') + '&productId=' + (${productId} ?: 'default-product-id') + '&income=1'" class=" btn btn-block">Incomes</a>
+            </div>
+            <div class="col-4 text-center">
+                <a th:href="'/?categoryId=' + (${categoryId} ?: 'default-category-id') + '&productId=' + (${productId} ?: 'default-product-id') + '&sale=1'" class="btn btn-block">Sales</a>
+            </div>
+            <div class="col-4 text-center  text-white">
+                <a th:href="'/?categoryId=' + (${categoryId} ?: 'default-category-id') + '&productId=' + (${productId} ?: 'default-product-id')+'&info=1'" class="btn btn-block">Product info</a>
+            </div>
+        </div>
+
+        <div class="row py-3">
+
+        <!--INCOME            -->
+            <div class="col-12" th:if="${incomes!=null}">
+                <div class="d-flex justify-content-end">
+                    <a th:href="'/?categoryId=' + (${categoryId} ?: 'default-category-id') + '&productId=' + (${productId} ?: 'default-product-id')+'&add=1'" class="btn btn-primary">Add income</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Income price</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="income:${incomes}">
+                    <tr>
+                        <td th:text="${income.product.name}"></td>
+                        <td th:text="${income.price}"></td>
+                        <td th:text="${income.amount}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+<!--            SALES-->
+            <div class="col-12" th:if="${sales!=null}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Income price</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="sale:${sales}">
+                    <tr>
+                        <td th:text="${sale.product.name}"></td>
+                        <td th:text="${sale.price}"></td>
+                        <td th:text="${sale.amount}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        <!--ADD INCOME            -->
+            <div class="col-12" th:if="${addProduct!=null}">
+                <div class="col-8 offset-2">
+                    <div class="card p-2">
+                        <h5 class="card-title text-center" th:text="'Product real price: '+${addProduct.selling}"></h5>
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1">Product income price</label>
+                                <input name="price" type="number" class="form-control" id="exampleInputEmail1" placeholder="Enter price">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail2">Product income amount</label>
+                                <input name="amount" type="number" class="form-control" id="exampleInputEmail2" placeholder="Enter amount">
+                            </div>
+                            <input name="productId" type="hidden" th:value="${productId}">
+                            <input name="categoryId" type="hidden" th:value="${categoryId}">
+                            <button class="btn btn-primary btn-block">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+<!--        INFO-->
+            <div class="col-12 " th:if="${product!=null}">
+                <div class="row">
+                    <div class="col-md-7">
+                        <img  th:src="${'/file/' + product.id}" class="img-fluid" alt="Product Image">
+                    </div>
+                    <div class="col-md-5">
+                        <h3 th:text="'Product: '+${product.name}"></h3>
+                        <h4 th:text="'Price: '+${product.selling}"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
